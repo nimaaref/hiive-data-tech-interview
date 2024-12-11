@@ -1,0 +1,51 @@
+# Hiive tech case study
+
+This repo is a starting code base for the Hiive tech case study.
+
+The case study is designed to test your ability to work with data and dbt code. The case study is designed to be completed in 2-3 hours.
+
+This project is using DuckDB as a database, but you can use any database you like (see section below for other databases).
+
+## Getting started
+
+To start working on the project you need to do the following:
+1. Fork this repo into your own account
+1. Clone the repo to your local machine
+  ```
+  git clone https://github.com/hiivemarkets/data-tech-interview
+  ```
+1. Install the requirements
+  ```
+  # create a virtual environment
+  python3 -m venv venv
+  source venv/bin/activate
+
+  # install the packages
+  pip install -r requirements.txt
+  ```
+1. Check that everything is working by running:
+  ```
+  dbt debug
+  ```
+  You should see a message `All checks passed!`.
+1. Seed the starting data:
+  ```
+  dbt seed
+  ```
+  Those will be materialized in main schema in the database, e.g `main.transaction_termination_reasons_seed`.
+
+## Working with other databases
+
+If you want to work with other databases. You can do that by changing two things:
+
+1. Install required adapter, e.g. for Postgres:
+  ```
+  pip install dbt-postgres
+  ```
+2. Change the database connection in the `profiles.yml` file. You can find more information on how to do this in the [dbt documentation](https://docs.getdbt.com/docs/profiles).
+
+> ⚠️ Don't commit your database credentials to the repository!
+
+## Data description
+
+You can read more about the input data in the [data description](data_description.md) file.

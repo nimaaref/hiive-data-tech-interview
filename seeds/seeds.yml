@@ -1,0 +1,33 @@
+seeds:
+  - name: transaction_termination_reasons_seed
+    config:
+      columns_types:
+        TRANSACTION_ID: VARCHAR
+        TERMINATION_REASON: VARCHAR
+
+  - name: transaction_transitions_seed
+    config:
+      columns_types:
+        ID: VARCHAR
+        INSERTED_AT: TIMESTAMP
+        UPDATED_AT: TIMESTAMP
+        TRANSACTION_ID: VARCHAR
+        NEW_STATE: VARCHAR
+        TRANSITIONED_AT: TIMESTAMP
+        _FIVETRAN_DELETED: BOOLEAN
+        _FIVETRAN_SYNCED: TIMESTAMP
+
+  - name: transactions_seed
+    config:
+      columns_types:
+        ID: VARCHAR
+        BID_ID: VARCHAR
+        STATE: VARCHAR
+        TRANSFER_METHOD: VARCHAR
+        INSERTED_AT: TIMESTAMP
+        COMPANY_ID: VARCHAR
+        NUM_SHARES: INTEGER
+        PRICE_PER_SHARE: INTEGER
+        GROSS_PROCEEDS: INTEGER
+        _FIVETRAN_DELETED: BOOLEAN
+        _FIVETRAN_SYNCED: TIMESTAMP
