@@ -2,6 +2,8 @@
 
 To answer the first task, we have provided mocked samples of raw data.
 
+## Transactions
+
 The `transactions` table contains information about transactions, and contains the following columns:
 
 - `id`: The unique identifier of the transaction.
@@ -16,6 +18,8 @@ The `transactions` table contains information about transactions, and contains t
 - `_fivetran_deleted`: The value is TRUE when the record has been soft deleted in the production database. The value is false otherwise.
 - `_fivetran_synced`: When the record was synced to the data warehouse.
 
+## Transaction transitions
+
 The `transaction_transitions` table contains information about how transactions move through various states (acts as a log table).
 This data can be used to identify when transactions entered and exited specific states (e.g. when a transaction closed).
 It contains the following columns:
@@ -26,6 +30,8 @@ It contains the following columns:
 - `new_state`: The new state the transaction moved into.
 - `_fivetran_deleted`: The value is TRUE when the record has been soft deleted in the production database. The value is false otherwise.
 - `_fivetran_synced`: When the record was synced to the data warehouse.
+
+## Termination reasons
 
 The `transaction_termination_reasons` table contains information about why transactions were terminated. This table contains rows for each reason.
 
