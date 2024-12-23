@@ -1,6 +1,6 @@
-# Hiive tech case study
+# Hiive Analytics Engineer Case Study
 
-This repo is a starting code base for the Hiive tech case study.
+This repo is a starting code base for the Hiive Analytics Engineering Case study.
 
 The case study is designed to test your ability to work with data and dbt code. The case study is designed to be completed in 2-3 hours.
 
