@@ -1,14 +1,16 @@
 # Hiive Analytics Engineer Case Study
 
-This repo is a starting code base for the Hiive Analytics Engineering Case study.
+While the case study reference Hiive, the scenarios, processes, and data are fictitious. This case study is the property of The Hiive Company Limited, is confidential and is not to be disseminated without Hiive’s prior consent. 
+
+This repo is a starting code base for the Hiive Analytics Engineering case study. The tasks to complete for the case study were provided to you separately by the Hiive recruitment team.
 
 The case study is designed to test your ability to work with data and dbt code. The case study is designed to be completed in 2-3 hours.
 
-This project is using DuckDB as a database, but you can use any database you like (see section below for other databases).
+This repo uses DuckDB as a database, but you can use any database you like (see section below for other databases).
 
 ## Getting started
 
-To start working on the project you need to do the following:
+To start working on the case study you need to do the following:
 
 1. Fork this repo into your own account
 1. Clone the repo to your local machine
