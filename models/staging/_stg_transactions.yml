@@ -1,0 +1,97 @@
+version: 2
+
+models:
+  - name: stg_transactions
+    description: "Cleaned and standardized transaction data including calculated gross proceeds and open/closed status."
+    columns:
+      - name: transaction_id
+        data_type: varchar
+        description: "Primary identifier of the transaction."
+        tests:
+          - not_null
+          - unique
+
+      - name: bid_id
+        data_type: varchar
+        description: "Identifier for the accepted bid linked to this transaction."
+        tests:
+          - not_null
+
+      - name: state
+        data_type: varchar
+        description: "Original state of the transaction (e.g. open, closed_paid, expired, etc.)."
+        tests:
+          - not_null
+          - accepted_values:
+              values:
+                - bid_accepted
+                - closed_paid
+                - cancelled
+                - pending_approval
+                - expired
+                - approval_declined
+              quote: true
+
+      - name: transaction_status
+        data_type: varchar
+        description: "Normalized transaction status used to distinguish between open and inactive transactions."
+        tests:
+          - not_null
+          - accepted_values:
+              values: ['open', 'inactive']
+              quote: true
+
+      - name: transfer_method
+        data_type: varchar
+        description: "Method used to transfer the shares for this transaction."
+        tests:
+          - not_null
+
+      - name: inserted_at
+        data_type: timestamp
+        description: "Timestamp of when the transaction record was created."
+        tests:
+          - not_null
+
+      - name: company_id
+        data_type: varchar
+        description: "ID of the company issuing the shares involved in this transaction."
+        tests:
+          - not_null
+
+      - name: num_shares
+        data_type: integer
+        description: "Number of shares involved in the transaction."
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: ' >= 0'
+
+      - name: price_per_share
+        data_type: integer
+        description: "Price assigned to each share in the transaction."
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: '>= 0'
+
+      - name: gross_proceeds
+        data_type: integer
+        description: "Total value of the transaction (num_shares × price_per_share)."
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: '>= 0'
+          - dbt_utils.expression_is_true:
+              expression: '= num_shares * price_per_share'
+      - name: _fivetran_deleted
+        data_type: boolean
+        description: "Soft-delete flag set by Fivetran; true if this record was deleted in source."
+        tests:
+          - not_null
+
+      - name: _fivetran_synced
+        data_type: varchar
+        description: "Timestamp of when the record was last synced to the warehouse."
+        tests:
+          - not_null

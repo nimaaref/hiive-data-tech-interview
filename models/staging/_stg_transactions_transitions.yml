@@ -1,0 +1,62 @@
+version: 2
+
+models: 
+  - name: stg_transactions_transitions
+    description: "Deduplicated and timestamp-cast log of transaction state changes."
+    columns:
+      - name: transaction_transition_id
+        data_type: varchar
+        description: "Primary identifier of the transaction transition event."
+        tests:
+          - not_null
+          - unique
+
+      - name: transaction_id
+        data_type: varchar
+        description: "Reference to the transaction that experienced this state change."
+        tests:
+          - not_null
+
+      - name: transitioned_at
+        data_type: timestamp
+        description: "Timestamp when the transaction entered the new state."
+        tests:
+          - not_null
+
+      - name: new_state
+        data_type: varchar
+        description: "The state the transaction transitioned into (e.g. open, closed_paid, etc.)."
+        tests:
+          - not_null
+          - accepted_values:
+              values:
+                - closed_paid
+                - bid_accepted
+                - expired
+                - approval_declined
+                - pending_approval
+                - cancelled
+              quote: true
+
+      - name: transaction_status
+        data_type: varchar
+        description: "Identifying if the transaction is active or inactive in the new state."
+        tests:
+          - not_null
+          - accepted_values:
+              values: 
+                - inactive
+                - open
+              quote: true
+
+      - name: _fivetran_deleted
+        data_type: boolean
+        description: "Soft-delete flag set by Fivetran for this transition event."
+        tests:
+          - not_null
+
+      - name: _fivetran_synced
+        data_type: varchar
+        description: "Timestamp when this transition record was synced to the warehouse."
+        tests:
+          - not_null

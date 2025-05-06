@@ -1,0 +1,58 @@
+version: 2
+
+sources:
+  - name: raw
+    description: "Raw source data from the Hiive platform, including transactions, transaction state transitions, and termination reasons."
+    schema: raw
+    loaded_at_field: _fivetran_synced
+
+    tables:
+      - name: transactions
+        description: "The transactions table contains information about all transactions processed on the Hiive platform."
+        columns:
+          - name: id
+            description: "The unique identifier of the transaction."
+          - name: bid_id
+            description: "The unique identifier of the accepted bid associated with the transaction."
+          - name: state
+            description: "The current state of the transaction. Transactions in cancelled, expired, closed_paid, and approval_declined states are no longer active."
+          - name: transfer_method
+            description: "The method of transfer of the transaction."
+          - name: inserted_at
+            description: "Timestamp indicating when the transaction record was created."
+          - name: company_id
+            description: "The unique identifier of the issuing company of the shares."
+          - name: num_shares
+            description: "The number of shares associated with each transaction."
+          - name: price_per_share
+            description: "The price per share of the transaction."
+          - name: gross_proceeds
+            description: "The revenue value of the transaction (number of shares multiplied by the price per share)."
+          - name: _fivetran_deleted
+            description: "TRUE if the record has been soft deleted in the production database. FALSE otherwise."
+          - name: _fivetran_synced
+            description: "Timestamp when the record was last synced to the data warehouse."
+
+      - name: transaction_transitions
+        description: "This table contains information about how transactions move through various states over time. It acts as a log of state changes for each transaction."
+        columns:
+          - name: id
+            description: "The unique identifier of the transaction transition."
+          - name: transaction_id
+            description: "The unique identifier of the transaction."
+          - name: transitioned_at
+            description: "Timestamp indicating when the transaction moved into a new state."
+          - name: new_state
+            description: "The new state the transaction moved into."
+          - name: _fivetran_deleted
+            description: "TRUE if the record has been soft deleted in the production database. FALSE otherwise."
+          - name: _fivetran_synced
+            description: "Timestamp when the record was last synced to the data warehouse."
+
+      - name: transaction_termination_reasons
+        description: "This table contains information about why transactions were terminated. Each row represents a termination reason linked to a specific transaction."
+        columns:
+          - name: transaction_id
+            description: "The identifier of the transaction."
+          - name: termination_reason
+            description: "The reason(s) a transaction was terminated."

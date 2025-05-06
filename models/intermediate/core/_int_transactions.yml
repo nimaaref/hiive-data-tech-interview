@@ -1,0 +1,30 @@
+version: 2
+
+models:
+  - name: int_transaction_lifecycle
+    description: Intermediate model that calculates the time a transaction was open, based on the earliest
+      transition and the first 'closed_paid' state transition. Used to support lifecycle analysis.
+    columns:
+      - name: transaction_id
+        data_type: varchar
+        description: "Unique identifier of the transaction."
+        tests:
+          - unique
+
+      - name: opened_at
+        data_type: timestamp
+        description: "Timestamp when the transaction was first observed in the system."
+
+      - name: closed_at
+        data_type: timestamp
+        description: "Timestamp when the transaction transitioned into the 'closed_paid' state."
+        tests:
+          - dbt_utils.expression_is_true:
+              expression: '>= opened_at'
+      - name: days_open
+        data_type: bigint
+        description: "Calculated number of days a transaction is open. At Hiive, a transaction is considered “open” if it has not been cancelled, expired, closed, or declined."
+        tests:
+          - not_null
+          - dbt_utils.expression_is_true:
+              expression: '>= 0'

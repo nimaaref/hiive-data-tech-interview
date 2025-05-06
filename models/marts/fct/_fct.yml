@@ -1,0 +1,72 @@
+version: 2
+
+models:
+  - name: fct_transactions
+    description: "Fact table representing enriched transactions on the Hiive platform, including lifecycle data, proceeds, and transaction metadata."
+    columns:
+      - name: transaction_id
+        data_type: varchar
+        description: "Primary key for the transaction."
+        tests:
+          - not_null
+          - unique
+
+      - name: bid_id
+        data_type: varchar
+        description: "Identifier of the bid associated with this transaction."
+
+      - name: company_id
+        data_type: varchar
+        description: "ID of the company issuing the shares for the transaction."
+
+      - name: transfer_method
+        data_type: varchar
+        description: "How the shares were transferred (e.g., ACH, Wire, Manual)."
+
+      - name: state
+        data_type: varchar
+        description: "Original raw state of the transaction (e.g., open, closed_paid)."
+
+      - name: transaction_status
+        data_type: varchar
+        description: "Normalized status derived from state (e.g., active/inactive)."
+
+      - name: inserted_at
+        data_type: varchar
+        description: "Timestamp of when the transaction was first created."
+
+      - name: closed_at
+        data_type: timestamp
+        description: "Timestamp of when the transaction moved to a 'closed_paid' state, if applicable."
+
+      - name: days_open
+        data_type: bigint
+        description: "Number of days between transaction opening and closing."
+
+      - name: num_shares
+        data_type: integer
+        description: "Number of shares involved in the transaction."
+
+      - name: price_per_share
+        data_type: integer
+        description: "Price per share agreed upon in the transaction."
+
+      - name: gross_proceeds
+        data_type: integer
+        description: "Total value of the transaction (num_shares × price_per_share)."
+
+
+  - name: fct_transaction_termination_reasons
+    description: "Bridge table connecting transactions to one or more termination reasons, including an orphan flag for unmatched records."
+    columns:
+      - name: transaction_id
+        data_type: varchar
+        description: "Reference to the unique transaction."
+
+      - name: termination_reason_id
+        data_type: integer 
+        description: "Surrogate key for the termination reason."
+
+      - name: is_orphan
+        data_type: boolean
+        description: "True if the transaction ID does not exist in the fact_transactions model."

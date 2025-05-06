@@ -1,0 +1,17 @@
+version: 2
+
+models:
+  - name: stg_termination_reasons
+    description: "Standardized and deduplicated reasons explaining why transactions were terminated."
+    columns:
+      - name: transaction_id
+        data_type: varchar
+        description: "ID of the transaction that was terminated."
+        tests:
+          - not_null
+
+      - name: termination_reason
+        data_type: varchar
+        description: "Raw text reason why the transaction was terminated."
+        tests:
+          - not_null

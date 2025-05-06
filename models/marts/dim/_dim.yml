@@ -1,0 +1,19 @@
+version: 2
+
+models:
+
+  - name: dim_termination_reason
+    description: "For each transaction id a the termination reason. If multiple reasons for the same transaction_id they are concatenated."
+    columns: 
+      - name: termination_reason_id
+        data_type: integer
+        description: "Primary identifier of the termination reason"
+        tests:
+          - unique
+          - not_null 
+        
+      - name: termination_reason
+        data_type: varchar
+        description: "Raw text reason why the transaction was terminated."
+        
+

@@ -13,3 +13,8 @@ snapshot-paths: ["snapshots"]
 clean-targets:
   - "target"
   - "dbt_packages"
+
+models:
+  dbt_hiive:
+    stg_customer_order_summary:
+      +enabled: false
