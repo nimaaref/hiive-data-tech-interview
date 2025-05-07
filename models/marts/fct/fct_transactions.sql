@@ -20,6 +20,7 @@ select
   l.days_open,
   t.num_shares,
   t.price_per_share,
-  coalesce(t.gross_proceeds, t.num_shares * t.price_per_share) as gross_proceeds
+  t.gross_proceeds
 from transactions t
-left join lifecycle l on t.transaction_id = l.transaction_id
+left join lifecycle l 
+on t.transaction_id = l.transaction_id

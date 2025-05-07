@@ -16,5 +16,7 @@ clean-targets:
 
 models:
   dbt_hiive:
+    marts:
+      +materialized: table
     stg_customer_order_summary:
       +enabled: false
