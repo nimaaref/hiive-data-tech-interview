@@ -1,3 +1,4 @@
+--comment to trigger diff
 WITH
 
 raw_customers AS (
