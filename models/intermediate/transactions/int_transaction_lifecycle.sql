@@ -9,7 +9,7 @@ with opens as (
 closes as (
   select
     transaction_id,
-    min(transitioned_at)  as closed_at
+    max(transitioned_at)  as closed_at
   from {{ ref('stg_transactions_transitions') }}
   where transaction_status = 'inactive'
   group by transaction_id

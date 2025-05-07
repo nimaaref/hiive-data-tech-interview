@@ -15,4 +15,4 @@ select
     _fivetran_synced
 from transactions_transitions
 where _fivetran_deleted = FALSE
-QUALIFY ROW_NUMBER() OVER (PARTITION BY transaction_id, new_state ORDER BY transitioned_at) = 1
+QUALIFY ROW_NUMBER() OVER (PARTITION BY transaction_id, new_state ORDER BY transitioned_at desc) = 1
