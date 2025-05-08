@@ -23,4 +23,4 @@ select
   t.gross_proceeds
 from transactions t
 left join lifecycle l 
-on t.transaction_id = l.transaction_id
+  on t.transaction_id = l.transaction_id

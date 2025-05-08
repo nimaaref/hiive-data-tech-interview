@@ -22,4 +22,4 @@ select
   date_diff('day', o.opened_at, coalesce(closed_at,CURRENT_DATE)) as days_open
 from opens o
 left join closes c
-on o.transaction_id = c.transaction_id
+  on o.transaction_id = c.transaction_id
